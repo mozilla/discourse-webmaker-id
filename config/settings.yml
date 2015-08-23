@@ -1,0 +1,7 @@
+plugins:
+  webmaker_client_id:
+    default: ''
+    shadowed_by_global: true
+  webmaker_client_secret:
+    default: ''
+    shadowed_by_global: true

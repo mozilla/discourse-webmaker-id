@@ -1,0 +1,4 @@
+en:
+  site_settings:
+    webmaker_client_id: 'Webmaker OAuth2 client id'
+    webmaker_client_secret: 'Webmaker OAuth2 client secret'
