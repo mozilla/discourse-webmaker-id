@@ -9,27 +9,36 @@ require 'omniauth-oauth2'
 class WebmakerAuthenticator < ::Auth::OAuth2Authenticator
   def register_middleware(omniauth)
     omniauth.provider :webmaker,
-    SiteSetting.webmaker_client_id,
-    SiteSetting.webmaker_client_secret
+      SiteSetting.webmaker_client_id,
+      SiteSetting.webmaker_client_secret
+  end
+end
+
+after_initialize do
+  class ::OmniAuth::Strategies::Webmaker
+    option :client_options, {
+      :site => SiteSetting.webmaker_server,
+      :authorize_url => '/login/oauth/authorize',
+      :token_url => '/login/oauth/access_token'
+    }
   end
 end
 
 class OmniAuth::Strategies::Webmaker < OmniAuth::Strategies::OAuth2
   option :name, 'webmaker'
 
-  option :client_options, {
-    :site => 'https://id.webmaker.org',
-    :authorize_url => 'https://id.webmaker.org/login/oauth/authorize',
-    :token_url => 'https://id.webmaker.org/login/oauth/access_token'
-  }
-
   option :authorize_params, {
     :response_type => 'code',
-    :scopes => 'user'
+    :scopes => 'user email'
   }
 
   def request_phase
     redirect client.auth_code.authorize_url(authorize_params)
+  end
+
+  def build_access_token
+    verifier = request.params["code"]
+    client.auth_code.get_token(verifier, {}, {:header_format => 'token %s'})
   end
 
   uid { raw_info['id'].to_s }
@@ -48,7 +57,7 @@ class OmniAuth::Strategies::Webmaker < OmniAuth::Strategies::OAuth2
   end
 
   def raw_info
-    @raw_info ||= access_token.get('user').parsed
+    @raw_info ||= access_token.get('/user').parsed
   end
 end
 

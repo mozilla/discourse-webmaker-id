@@ -1,4 +1,7 @@
 plugins:
+  webmaker_server:
+    default: 'https://id.webmaker.org'
+    shadowed_by_global: true
   webmaker_client_id:
     default: ''
     shadowed_by_global: true
