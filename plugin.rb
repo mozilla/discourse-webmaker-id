@@ -63,8 +63,8 @@ end
 
 auth_provider :title => 'with Webmaker',
   :message => 'Authentication with Webmaker (make sure pop up blockers are not enabled)',
-  :frame_width => 920,
-  :frame_height => 800,
+  :frame_width => 660,
+  :frame_height => 650,
   :authenticator => WebmakerAuthenticator.new('webmaker', trusted: true)
 
 register_css <<CSS
