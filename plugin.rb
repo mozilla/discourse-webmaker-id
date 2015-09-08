@@ -73,4 +73,15 @@ register_css <<CSS
   background: #C13832;
 }
 
+.btn-social.webmaker:before {
+  content: "";
+  background-image: url("https://d1v2u343srvgst.cloudfront.net/webmaker-login-v2.png");
+  background-size: auto 15px;
+  background-repeat: no-repeat;
+  width: 16px;
+  height: 15px;
+  display: inline-block;
+  margin-bottom: -3px;
+}
+
 CSS
